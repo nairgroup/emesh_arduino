@@ -86,8 +86,8 @@ void setup() {
   //BMP180 startup commands
   //Opening file to create header
   file_lun = SD.open(output_filename, FILE_WRITE);
-  file_lun.println("Begin Record");
-  file_lun.print("Yr");
+  file_lun.println("#Begin Record");
+  file_lun.print("#Yr");
   file_lun.print("\t");
   file_lun.print("Month");
   file_lun.print("\t");
@@ -113,7 +113,7 @@ void setup() {
   file_lun.print("\t");
   file_lun.print("Wspd m/s");
   file_lun.print("\t");
-  file_lun.println("Wdir V"); //Must be converted from volts in post-processing
+  file_lun.print("Wdir V"); //Must be converted from volts in post-processing
   //file_lun.print("\t");
   //file_lun.println("Air Q. V");
   file_lun.close();
@@ -145,6 +145,7 @@ void loop() {
   file_lun = SD.open(output_filename, FILE_WRITE);
 
   time_start = millis();
+  file_lun.print("\n");
   file_lun.print(year);
   file_lun.print("\t");
   file_lun.print(month);
@@ -183,7 +184,7 @@ void loop() {
   wind_count = 0; //Reseting wind_count
   file_lun.print("\t");
   file_lun.print(analogRead(0)); //0.0049 converts analogRead value to a voltage, for 5V arduinos
-  file_lun.println("\t");                    //0.0032 is for 3.3v arduinos
+                                 //0.0032 for 3.3v arduinos
 
 
   //Air Quality
