@@ -51,6 +51,7 @@ byte dayOfWeek;
 byte dayOfMonth;
 byte month;
 byte year;
+byte si = 00; //Station I.D.
 
 //Creating file identifiers
 File file_lun; //Output file identifier
@@ -81,7 +82,8 @@ void setup() {
 
   //Creating filename
   readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
-  sprintf(output_filename, "20%u%02u%02u.txt",year,month,dayOfMonth);
+  //File name is YYMMDDSS, year, month, day, station code
+  sprintf(output_filename, "%02u%02u%02u%02u.txt",year,month,dayOfMonth,si);
   
   //BMP180 startup commands
   //Opening file to create header
@@ -141,7 +143,7 @@ void loop() {
   readDS3231time(&second, &minute, &hour, &dayOfWeek, &dayOfMonth, &month, &year);
   
   //Opening File
-  sprintf(output_filename, "20%u%02u%02u.txt",year,month,dayOfMonth);
+  sprintf(output_filename, "%02u%02u%02u%02u.txt",year,month,dayOfMonth,si);
   file_lun = SD.open(output_filename, FILE_WRITE);
 
   time_start = millis();
